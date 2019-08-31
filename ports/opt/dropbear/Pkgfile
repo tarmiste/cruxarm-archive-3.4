@@ -1,0 +1,23 @@
+# Description: Small and secure SSH2 server and client
+# URL:         http://matt.ucc.asn.au/dropbear/dropbear.html
+# Maintainer:  Juergen Daubert, jue at crux dot nu
+# Depends on:  zlib
+
+name=dropbear
+version=2019.78
+release=1
+source=(http://matt.ucc.asn.au/$name/releases/$name-$version.tar.bz2 \
+        $name)
+
+build () {
+    cd $name-$version
+
+    echo '#define SFTPSERVER_PATH "/usr/lib/ssh/sftp-server"' > localoptions.h
+
+    ./configure --prefix=/usr
+    make
+    make DESTDIR=$PKG install
+
+    install -d $PKG/etc/{rc.d,dropbear}/
+    install -D -m 755 $SRC/dropbear $PKG/etc/rc.d/
+}

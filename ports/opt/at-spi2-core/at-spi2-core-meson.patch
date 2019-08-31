@@ -1,0 +1,12 @@
+diff -rupN at-spi2-core-2.32.0-orig/atspi/meson.build at-spi2-core-2.32.0/atspi/meson.build
+--- at-spi2-core-2.32.0-orig/atspi/meson.build	2019-03-23 18:59:10.551458994 +0100
++++ at-spi2-core-2.32.0/atspi/meson.build	2019-03-23 19:00:00.130836451 +0100
+@@ -57,7 +57,7 @@ atspi_headers = [
+ 
+ atspi_includedir = join_paths(get_option('prefix'), get_option('includedir'), 'at-spi-2.0', 'atspi')
+ 
+-install_headers(atspi_headers, subdir: atspi_includedir)
++install_headers(atspi_headers, subdir: 'at-spi-2.0/atspi')
+ 
+ atspi_enums = gnome.mkenums('atspi-enum-types',
+                             sources: [ 'atspi-constants.h', 'atspi-types.h' ],

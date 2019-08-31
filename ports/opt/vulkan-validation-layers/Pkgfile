@@ -1,0 +1,32 @@
+# Description: Vulkan validation layers
+# URL: https://www.khronos.org/vulkan/
+# Maintainer: Danny Rawlins, crux at romster dot me
+# Depends on: glslang vulkan-loader
+
+name=vulkan-validation-layers
+version=1.1.108.0
+release=2
+source=(https://github.com/KhronosGroup/Vulkan-ValidationLayers/archive/sdk-$version/Vulkan-ValidationLayers-sdk-$version.tar.gz)
+
+build() {
+	cd Vulkan-ValidationLayers-sdk-$version
+
+	mkdir build
+	cd build
+
+	cmake .. \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_INSTALL_LIBDIR=lib \
+		-DCMAKE_INSTALL_DATADIR=/share \
+		-DCMAKE_INSTALL_SYSCONFDIR=/etc \
+		-DCMAKE_BUILD_TYPE=Release \
+		-DGLSLANG_INSTALL_DIR=/usr \
+		-DCMAKE_SKIP_RPATH=True \
+		-DBUILD_TESTS=Off \
+		-DBUILD_WSI_XCB_SUPPORT=On \
+		-DBUILD_WSI_XLIB_SUPPORT=On \
+		-DBUILD_WSI_WAYLAND_SUPPORT=Off
+
+	make
+	make DESTDIR=$PKG install
+}

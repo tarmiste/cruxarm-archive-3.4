@@ -1,0 +1,14 @@
+diff -Nru s-nail-14.9.13.orig/mk/make-config.sh s-nail-14.9.13/mk/make-config.sh
+--- s-nail-14.9.13.orig/mk/make-config.sh	2019-06-02 15:22:54.932415908 +0200
++++ s-nail-14.9.13/mk/make-config.sh	2019-06-02 15:24:18.893390828 +0200
+@@ -861,8 +861,8 @@
+       else
+          j=`${awk} -v LINE="${line}" 'BEGIN{
+             gsub(/^[^=]*=/, "", LINE)
+-            gsub(/^\"*/, "", LINE)
+-            gsub(/\"*$/, "", LINE)
++            gsub(/^"*/, "", LINE)
++            gsub(/"*$/, "", LINE)
+             print LINE
+          }'`
+       fi

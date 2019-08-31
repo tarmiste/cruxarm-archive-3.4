@@ -1,0 +1,14 @@
+# Description: The Rust language with Cargo included (binary edition).
+# URL: http://www.rust-lang.org/
+# Maintainer: Danny Rawlins, crux at romster dot me
+# Depends on: llvm python3
+# Optional: sccache
+
+name=rust-bin
+version=1.35.0
+release=1
+source=(https://crux.ster.zone/downloads/rust/rust-$version-bin.tar.xz)
+
+build() {
+	cp -a $SRC/usr $PKG/
+}

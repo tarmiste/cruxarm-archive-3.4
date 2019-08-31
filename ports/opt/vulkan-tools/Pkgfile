@@ -1,0 +1,27 @@
+# Description: Vulkan tools
+# URL: https://www.khronos.org/vulkan/
+# Maintainer: Danny Rawlins, crux at romster dot me
+# Depends on: glslang vulkan-loader
+
+name=vulkan-tools
+version=1.1.108.0
+release=1
+source=(https://github.com/KhronosGroup/Vulkan-Tools/archive/sdk-$version/Vulkan-Tools-sdk-$version.tar.gz)
+
+build() {
+	cd Vulkan-Tools-sdk-$version
+
+	mkdir build
+	cd build
+
+	cmake .. \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_INSTALL_LIBDIR=lib \
+		-DCMAKE_BUILD_TYPE=Release \
+		-DGLSLANG_INSTALL_DIR=/usr \
+		-DBUILD_WSI_WAYLAND_SUPPORT=OFF \
+		-DBUILD_ICD=OFF
+
+	make
+	make DESTDIR=$PKG install
+}

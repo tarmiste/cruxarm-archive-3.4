@@ -1,0 +1,39 @@
+# Description: Khronos reference front-end for GLSL and ESSL, and sample SPIR-V generator
+# URL: https://www.khronos.org/opengles/sdk/tools/Reference-Compiler
+# Maintainer: Danny Rawlins, crux at romster dot me
+# Depends on: spirv-tools
+
+name=glslang
+version=7.11.3214
+release=1
+source=(https://github.com/KhronosGroup/glslang/archive/$version/$name-$version.tar.gz)
+
+build() {
+	cd $name-$version
+
+	mkdir -p build-{shared,static}
+
+	(cd build-shared
+	cmake .. \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_BUILD_TYPE=Release \
+		-DBUILD_SHARED_LIBS=ON
+	make
+	)
+
+	(cd build-static
+	cmake .. \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_BUILD_TYPE=Release \
+		-DBUILD_SHARED_LIBS=OFF
+	make
+	)
+
+	make -C build-shared DESTDIR=$PKG install
+	make -C build-static DESTDIR=$PKG install
+
+	cd $PKG/usr/lib
+		for lib in *.so; do
+		ln -sf "${lib}" "${lib}.0"
+	done
+}

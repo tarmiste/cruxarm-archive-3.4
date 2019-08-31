@@ -1,0 +1,27 @@
+# Description: A small library defining error values for GnuPG components
+# URL:         http://www.gnupg.org
+# Maintainer:  Thomas Penteker, tek at serverop dot de
+# Packager:    Matt Housh, jaeger at morpheus dot net
+
+name=libgpg-error
+version=1.36
+release=1
+source=(https://www.gnupg.org/ftp/gcrypt/$name/$name-$version.tar.bz2
+        gawk.patch)
+
+build() {
+  cd $name-$version
+
+  patch -p1 -i $SRC/gawk.patch
+
+  autoreconf 
+  
+  ./configure --prefix=/usr \
+              --disable-nls \
+              --enable-static
+  make
+  make DESTDIR=$PKG install
+
+  rm -r $PKG/usr/share/info/
+
+}

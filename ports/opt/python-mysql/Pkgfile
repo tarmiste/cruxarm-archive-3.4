@@ -1,0 +1,15 @@
+# Description: MySQL interface for Python
+# URL:         https://github.com/PyMySQL/mysqlclient-python
+# Maintainer:  Juergen Daubert, jue at crux dot nu
+# Depends on:  python-setuptools mysql
+
+name=python-mysql
+version=1.4.1
+release=1
+source=(https://github.com/PyMySQL/mysqlclient-python/archive/v1.4.1/$name-$version.tar.gz)
+
+build () {
+    cd mysqlclient-python-$version
+    /usr/bin/python setup.py install --root=$PKG --prefix=/usr
+    chmod 0644 $PKG/usr/lib/python2.7/site-packages/*.egg-info/*
+}
